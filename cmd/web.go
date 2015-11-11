@@ -58,6 +58,7 @@ func runWeb(ctx *cli.Context) {
 	m.Get("/docs/*", routers.Docs)
 	m.Post("/hook", routers.Hook)
 	m.Get("/search", routers.Search)
+	m.Get("/admin/category", routers.TocManager)
 	m.Get("/*", routers.Pages)
 
 	m.NotFound(routers.NotFound)

@@ -255,8 +255,22 @@ var (
 	Tocs      map[string]*Toc
 )
 
+func ReloadTocs() error {
+	fmt.Println("KuuYee=====> 进入ReloadTocs")
+	//localRoot := setting.Docs.Target
+
+	tocs, err := initToc(docsRoot)
+	if err != nil {
+		return fmt.Errorf("initToc: %v", err)
+	}
+	initDocs(tocs, docsRoot)
+	Tocs = tocs
+	return nil
+}
+
 func initToc(localRoot string) (map[string]*Toc, error) {
 	tocPath := path.Join(localRoot, "TOC.ini")
+	fmt.Println("KuuYee====> TocPath: ", tocPath)
 	if !com.IsFile(tocPath) {
 		return nil, fmt.Errorf("TOC not found: %s", tocPath)
 	}
@@ -267,6 +281,7 @@ func initToc(localRoot string) (map[string]*Toc, error) {
 		return nil, fmt.Errorf("Fail to load TOC.ini: %v", err)
 	}
 
+	fmt.Println("KuuYee ===== 01")
 	tocs := make(map[string]*Toc)
 	for _, lang := range setting.Docs.Langs {
 		toc := &Toc{
@@ -321,9 +336,10 @@ func initToc(localRoot string) (map[string]*Toc, error) {
 				FileName:     path.Join(localRoot, lang, pageName) + ".md",
 			})
 		}
-
+		fmt.Println("KuuYee====> ", toc.Pages)
 		tocs[lang] = toc
 	}
+
 	return tocs, nil
 }
 
@@ -359,6 +375,7 @@ func ReloadDocs() error {
 		}
 	}
 
+	fmt.Println("localRoot:", localRoot)
 	if !com.IsDir(localRoot) {
 		return fmt.Errorf("Documentation not found: %s - %s", setting.Docs.Type, localRoot)
 	}
