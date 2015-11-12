@@ -62,8 +62,10 @@ var (
 		HasLandingPage bool
 		DocsBaseURL    string
 
-		UseCustomTpl   bool
-		NavbarTplPath  string
+		UseCustomTpl  bool
+		NavbarTplPath string
+		// add by kuuyee
+		MenuTplPath    string
 		HomeTplPath    string
 		DocsTplPath    string
 		FooterTplPath  string
@@ -151,6 +153,7 @@ func NewContext() {
 	Page.FooterTplPath = "footer.html"
 	Page.DisqusTplPath = "disqus.html"
 	Page.DuoShuoTplPath = "duoshuo.html"
+	Page.MenuTplPath = "menu.html"
 
 	sec = Cfg.Section("navbar")
 	list := sec.KeyStrings()

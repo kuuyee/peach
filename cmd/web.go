@@ -14,6 +14,7 @@ import (
 	"github.com/peachdocs/peach/modules/middleware"
 	"github.com/peachdocs/peach/modules/setting"
 	"github.com/peachdocs/peach/routers"
+	"github.com/peachdocs/peach/routers/admin"
 )
 
 var Web = cli.Command{
@@ -58,7 +59,12 @@ func runWeb(ctx *cli.Context) {
 	m.Get("/docs/*", routers.Docs)
 	m.Post("/hook", routers.Hook)
 	m.Get("/search", routers.Search)
-	m.Get("/admin/category", routers.TocManager)
+	//m.Get("/admin/category", routers.TocManager)
+	m.Group("/admin", func() {
+		m.Get("", admin.TocManager)
+		m.Get("/category", admin.Categorys)
+		m.Get("/article", admin.TocManager)
+	})
 	m.Get("/*", routers.Pages)
 
 	m.NotFound(routers.NotFound)

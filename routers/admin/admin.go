@@ -12,10 +12,10 @@
 // License for the specific language governing permissions and limitations
 // under the License.
 
-package routers
+package admin
 
 import (
-	//"fmt"
+	"fmt"
 	//"strings"
 
 	"github.com/peachdocs/peach/models"
@@ -35,5 +35,15 @@ func TocManager(ctx *middleware.Context) {
 	//ctx.Data["Content"] = fmt.Sprintf(`<script type="text/javascript" src="/%s/%s?=%d"></script>`, langVer, node.DocumentPath+".js", node.LastBuildTime)
 	ctx.Data["KuuYee"] = "光子"
 
-	ctx.HTML(200, "admin")
+	ctx.HTML(200, "admin/admin")
+}
+
+func Categorys(ctx *middleware.Context) {
+	toc := models.Tocs[ctx.Locale.Language()]
+	if toc == nil {
+		toc = models.Tocs[setting.Docs.Langs[0]]
+	}
+	ctx.Data["Toc"] = toc
+	fmt.Println("KuuYee====> Comein Category")
+	ctx.HTML(200, "admin/category")
 }
